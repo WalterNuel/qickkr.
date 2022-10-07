@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>qickkr</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: rgba(54, 54, 54, 0.123);
+      width: 3px;
+      transition: all .6s ease;
+    }
+
+    ::-webkit-scrollbar-track:hover {
+      width: 10px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: rgba(85, 85, 85, 0.267);
+      transition: all .6s ease;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    ::-ms-reveal {
+      border: 1px solid salmon;
+      width: 30px;
+      height: 50px;
+    }
+
+    :root {
+      --nav-color: #070707;
+      --nav-border-color: rgb(75, 75, 75);
+      --nav-blur-color: #2525258c;
+
+      --content-color: #1f1f1f;
+      --card-color: rgb(10, 10, 10);
+      --card-icon-color: rgb(219, 219, 219);
+
+      --hover-color: #252525;
+
+      --search-bar-color: rgb(44, 44, 44);
+    }
+
+    body {
+      background-color: rgb(5, 5, 5);
+      color: white;
+      background-repeat: no-repeat;
+      display: block;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav .logo {
+      cursor: pointer;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .logo svg {
+      width: 3.2em;
+      /* transform: rotateZ(90deg) rotateX(180deg) rotate(45deg); */
+    }
+
+    .logo:hover {
+      animation: rainbow ease;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate-reverse;
+    }
+
+
+
+    /* .logo .blue {
+      color: rgb(24, 39, 255);
+    } */
+
+    .nav {
+      background-color: var(--nav-blur-color);
+      border-bottom: 1px solid var(--nav-border-color);
+      height: fit-content;
+      position: fixed;
+      color: white;
+      top: 0;
+      width: 100vw;
+      margin: 0;
+      z-index: 10000;
+      backdrop-filter: blur(10px);
+      transition: all .6s;
+    }
+
+    /* .nav.sticky {
+      width: 100%;
+      position: fixed;
+      box-shadow: 0px 0px 10px -3px black;
+      top: 0;
+      left: 0;
+      z-index: 10000;
+    } */
+
+    .nav ul {
+      position: relative;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .left-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .nav-control {
+      width: 30px;
+      cursor: pointer;
+      padding: 10px 0 10px 10px;
+      border-radius: 40px;
+      background-color: transparent;
+      border: 1px solid transparent;
+      transition: all .3s;
+    }
+
+    .nav-control:active {
+      background-color: #7a7a7a38;
+      border: 1px solid var(--nav-border-color);
+      transform: scale(0.8);
+    }
+
+    .control {
+      background-color: var(--card-icon-color);
+      height: 3px;
+      width: 20px;
+      border-radius: 10px;
+    }
+
+    .control.two {
+      margin-top: 3px;
+    }
+
+    li {
+      list-style-type: none;
+      margin-right: 10px;
+    }
+
+    li.right div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .right button {
+      cursor: pointer;
+      margin-left: 5px;
+      padding: 10px;
+      width: 5rem;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: lighter;
+      align-items: center;
+      justify-content: space-around;
+      color: rgb(255, 255, 255);
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: all .5s ease;
+    }
+
+    .btn-in {
+      background-color: rgb(0, 209, 28);
+    }
+    .btn-up {
+      background-color: rgb(29, 82, 255);
+    }
+
+    .btn-up:hover,
+    .btn-in:hover {
+      animation: rainbow-body2;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+    }
+
+    .body-header {
+      width: 95vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      transform: translate(10px, 80px);
+      font-family: Rockwell;
+      font-weight: 300;
+    }
+
+    .body-header h1{
+      font-weight: 10;
+      font-size: 26px;
+    }
+    .header-logo {
+      font-size: 3rem;
+      animation: rainbow-color;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+    }
+
+    .floating-icon {
+      cursor: pointer;
+      display: none;
+      position: fixed;
+      bottom: 28px;
+      right: 18px;
+      font-size: 1.7rem;
+      width: 35px;
+      padding: 2px 1px 2px 0;
+      font-family: Arial, Helvetica, sans-serif;
+      align-items: center;
+      justify-content: space-around;
+      color: rgb(255, 255, 255);
+      background-color: #181818;
+      border: 1px solid var(--nav-border-color);
+      border-radius: 30px;
+      box-shadow: 0px 4px 15px 0px rgba(2, 2, 2, 0.541);
+      transition: all .5s ease;
+    }
+
+    .search-part {
+      background-color: transparent;
+      padding: 0;
+      width: 25rem;
+      display: flex;
+      align-items: center;
+      height: 1rem;
+    }
+
+    .search-main {
+      background-color: rgb(61, 61, 61);
+      border-radius: 5px;
+      width: 100%;
+      height: 1.6rem;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all .3s ease;
+    }
+
+    .search-main:focus,
+    .search-main:hover,
+    .search-main:active {
+      background-color: var(--search-bar-color);
+    }
+
+    input[type=text].search-bar {
+      width: 100%;
+      font-size: 1.2em;
+      margin-right: 3px;
+      border-radius: 5px;
+      background-color: transparent;
+      color: white;
+      border: none;
+      transition: all .3s ease;
+    }
+
+    .search-bar::placeholder {
+      color: rgb(163, 163, 163);
+    }
+
+    .search-bar:focus {
+      outline: none;
+    }
+
+    input[type=text].search-bar:focus,
+    input[type=text].search-bar:hover,
+    input[type=text].search-bar:active {
+      background-color: transparent;
+    }
+
+
+    .add-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      border-radius: 5px;
+      font-size: 1rem;
+      padding: 3px 3px 0px 3px;
+      color: rgb(255, 255, 255);
+      border: none;
+      transition: .6s ease-in;
+    }
+
+    .add-note:active {
+      animation-name: spinning;
+      animation-duration: 1s;
+    }
+
+    .body {
+      display: flex;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .side-nav {
+      background-color: var(--nav-blur-color);
+      border-right: 1px solid var(--nav-border-color);
+      position: fixed;
+      transform: translateX(-800px);
+      top: 60px;
+      align-items: center;
+      height: 100vh;
+      transition: .6s ease-in;
+      width: 160px;
+      padding: 10px 20px 0 0;
+    }
+
+    .side-nav.show {
+      transform: translateX(0px);
+    }
+
+    .side-nav .other {
+      width: 100%;
+      padding: 20px 10px;
+    }
+
+    .side-nav li {
+      width: 100%;
+      margin: 5px 0 0 0;
+    }
+
+    .side-nav .list-btn {
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      width: 100%;
+      border: none;
+      color: rgb(255, 255, 255);
+      background: none;
+      border-radius: 5px;
+      padding: 5px 0 5px 10px;
+      transition: all .2s;
+    }
+
+    .side-nav li.active .list-btn {
+      position: relative;
+      background-color: rgba(224, 224, 255, 0.281);
+    }
+
+    .side-nav li.active .list-btn::after {
+      content: '';
+      position: absolute;
+      right: 10px;
+      height: 7px;
+      width: 7px;
+      background-color: rgb(255, 255, 255);
+      box-shadow: 0px 0px 5px rgb(255, 255, 255);
+      border-radius: 30px;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      font-size: 2rem;
+    }
+
+    hr.underline {
+      border: 1px solid rgb(205, 205, 255);
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .side-nav .list-btn:hover {
+      background-color: rgba(224, 224, 255, 0.281);
+    }
+
+    .list-btn span svg {
+      margin: 0 10px 0 0;
+    }
+
+    .main {
+      /* background-color: rgba(94, 94, 94, 0.281); */
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      width: 65%;
+      transform: translateY(4rem) translateX(10rem);
+      padding: 50px;
+      transition: all .6s ease;
+    }
+
+    .main.alone {
+      transform: translateY(4rem) translateX(-5rem);
+    }
+
+    .main .feed {
+      background-color: transparent;
+      width: 70%;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 1.5rem;
+    }
+
+    .main .card {
+      background-color: #1f1f1f;
+      width: 100%;
+      height: fit-content;
+      border-radius: 5px;
+      padding: 2px;
+      transition: all .6s ease;
+    }
+
+    .main .card:hover {
+      transform: scale(1.01, 1.01);
+      transform-origin: center;
+      animation: rainbow-body ease-in-out;
+      animation-duration: 10s;
+      animation-iteration-count: infinite;
+    }
+
+    .main .card .card-main {
+      background-color: var(--card-color);
+      width: 100%;
+      height: fit-content;
+      padding: 10px 0px;
+      border-radius: 5px;
+    }
+
+    .card-main .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 15px;
+    }
+
+    .card-top h2 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .posted {
+      font-size: 15px;
+      margin-left: 7px;
+    }
+
+    .popup {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      background: 0;
+      color: white;
+      padding: 0;
+      border-radius: 5px;
+      transition: all .6s ease;
+    }
+
+    .popup:hover {
+      background-color: var(--hover-color);
+    }
+
+    /* The actual popup (appears on top) */
+    .popup .popuptext {
+      width: 160px;
+      visibility: hidden;
+      background-color: var(--card-color);
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 8px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -80px;
+      transition: all .6s ease;
+    }
+
+    /* Popup arrow */
+    .popup .popuptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+
+    /* Toggle this class when clicking on the popup container (hide and show the popup) */
+    .popup .popuptext.show {
+      visibility: visible;
+    }
+
+    .card-main .card-top i {
+      padding: 0;
+      font-size: 1.3em;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .card-main p {
+      background-color: transparent;
+      margin: 10px 15px;
+      padding: 0px;
+      height: fit-content;
+    }
+
+    .card-main textarea {
+      background-color: transparent;
+      padding: 0px;
+      width: 100%;
+      height: calc(row);
+      font-size: 1.1rem;
+      color: white;
+      resize: none;
+    }
+
+    .main .card .options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 0 0 0;
+      margin: 0 15px;
+    }
+
+    .options .comment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--card-icon-color);
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      border-radius: 5px;
+      transition: all .6s ease;
+    }
+
+    .comment-section {
+      border: 1px solid salmon;
+      height: 100px;
+      padding: 5px 0;
+      width: 100%;
+      background-color: var(--nav-color);
+    }
+
+    .comment-section h4 {
+      margin: 0 15px;
+    }
+
+    .options .comment:hover {
+      background-color: #252525;
+    }
+
+    .main .card .button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1rem;
+      font-family: Arial, Helvetica, sans-serif;
+      background: none;
+      color: var(--card-icon-color);
+      padding: 2px;
+      border-radius: 5px;
+      transition: all .6s ease;
+    }
+
+    .main .card .button:hover {
+      background-color: var(--hover-color);
+    }
+
+    .create,
+    .edit {
+      background-color: rgb(19, 18, 18);
+      width: 100%;
+      height: fit-content;
+      padding: 10px 0px;
+      border-radius: 5px;
+    }
+
+    .create p {
+      margin: 0 15px;
+    }
+
+    .btn-confirm {
+      width: 90%;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .create textarea,
+    .edit textarea {
+      width: 100%;
+      height: 40px;
+      text-anchor: start;
+      resize: none;
+      border: 0;
+      border-radius: 5px;
+      background-color: #252525;
+      color: inherit;
+      padding: 5px 0 5px 5px;
+    }
+
+    .create textarea:focus,
+    .edit textarea:focus {
+      outline: 0;
+    }
+
+    /* .delete {
+      background-color: var(--content-color);
+      width: 100%;
+      height: fit-content;
+      padding: 10px 0px;
+      border-radius: 5px;
+    }  */
+
+    .delete-form-top {
+      display: flex;
+      align-items: center;
+    }
+
+    .delete-form-top .back {
+      border: 1px solid var(--nav-border-color);
+      background-color: var(--content-color);
+      border-radius: 10px;
+      padding: 0 5px;
+      margin-right: 11px;
+      font-size: 1.4rem;
+    }
+
+    .delete-pop {
+      background-color: transparent;
+      width: 70%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .delete {
+      background-color: var(--card-color);
+      border-radius: 5px;
+      margin: 10px 15px;
+      padding: 10px;
+    }
+
+    .btn {
+      background-color: var(--content-color);
+      border-radius: 10px;
+      margin-top: 1rem;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .btn-confirm .delete-delete {
+      background-color: #1d1d1d;
+      border: 1px solid var(--nav-border-color);
+      padding: 7px;
+      border-radius: 10px;
+      color: white;
+      margin: 1em 0 0 0;
+    }
+
+    @keyframes spinning {
+      100% {
+        font-size: 1rem;
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes rainbow {
+      0% {
+        color: yellow;
+      }
+
+      60% {
+        color: orange;
+      }
+
+      80% {
+        color: yellowgreen;
+      }
+
+      100% {
+        color: yellow;
+      }
+
+    }
+
+    @keyframes rainbow-body {
+      0% {
+        background-color: yellow;
+        box-shadow: 0px 4px 15px 0px rgb(255, 255, 0, 0.541);
+      }
+
+      20% {
+        background-color: orange;
+        box-shadow: 0px 4px 15px 0px rgb(255, 165, 0, 0.541);
+      }
+
+      40% {
+        background-color: rgb(29, 82, 255);
+        box-shadow: 0px 4px 15px 0px rgba(29, 82, 255, 0.541);
+      }
+
+      60% {
+        background-color: rgb(127, 255, 0);
+        box-shadow: 0px 4px 15px 0px rgba(127, 255, 0, 0.541);
+      }
+
+      80% {
+        background-color: rgb(255, 29, 29);
+        box-shadow: 0px 4px 15px 0px rgba(255, 29, 29, 0.541);
+      }
+
+      100% {
+        background-color: rgb(255, 255, 0);
+        box-shadow: 0px 4px 15px 0px rgba(255, 255, 0, 0.541);
+      }
+
+    }
+
+    @keyframes rainbow-body2 {
+      0% {
+        background-color: rgb(255, 115, 0);
+      }
+
+      30% {
+        background-color: rgb(255, 0, 21);
+      }
+
+      60% {
+        background-color: rgb(87, 173, 0);
+      }
+
+      100% {
+        background-color: rgb(255, 115, 0);
+      }
+
+    }
+
+    @keyframes rainbow-color {
+      0% {
+        color: rgb(255, 115, 0);
+      }
+
+      30% {
+        color: rgb(255, 0, 21);
+      }
+
+      60% {
+        color: rgb(87, 173, 0);
+      }
+
+      100% {
+        color: rgb(255, 115, 0);
+      }
+
+    }
+
+    @media (max-width: 800px) {
+
+      body {
+        overflow-x: hidden;
+      }
+
+      .nav {
+        padding: 0;
+        background-color: var(--nav-blur-color);
+      }
+
+      .main .card .card-main {
+        margin: 0;
+      }
+
+      .nav ul
+
+      /*,
+      .nav.sticky ul*/
+        {
+        padding: 10px;
+        justify-content: space-between;
+      }
+
+      .search-part {
+        display: none;
+      }
+
+      .left-nav {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+      }
+
+      .main {
+        transform: translate(0, 0);
+        width: 99vw;
+        padding: 0;
+        justify-content: center;
+      }
+
+      .main.alone {
+        transform: translateY(6.3rem) translateX(0);
+      }
+
+      .side-nav {
+        height: 100vh;
+        width: 78vw;
+        top: 20px;
+        backdrop-filter: blur(10px);
+        z-index: 1;
+      }
+
+      .main .feed {
+        width: 95%;
+        grid-gap: 0.3em;
+      }
+
+      .main.delete-page {
+        margin-top: 0;
+        height: 100vh;
+      }
+
+      .delete-pop {
+        width: 95%;
+      }
+
+      .floating-icon {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <ul>
+      <div class="left-nav">
+        <li class="logo">
+          <a href="{% url 'Polls:home' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2em"
+              height="1.2em">
+              <text kerning="auto" font-family="Myriad Pro" fill="rgb(0, 0, 0)" x="0px" y="30px">
+                <tspan font-size="1em" font-family="Rockwell" fill="currentcolor">qickkr.</tspan>
+              </text>
+            </svg>
+            <!-- <svg viewBox="0 0 32 18" xmlns="http://www.w3.org/2000/svg" class="h-logo">
+              <g fill="currentcolor" fill-rule="nonzero">
+                <path
+                  d="M21.07.536a1.813 1.813 0 012.568 0l1.283 1.286L9.945 16.83c-.709.71-1.858.71-2.567 0l-1.284-1.287L21.071.536zm-6.418 4.717l-2.567 2.572-3.424-3.43-4.28 4.288 3.424 3.43-1.71 3.43L.531 9.97a1.821 1.821 0 010-2.572L7.378.537A1.813 1.813 0 019.945.535l4.707 4.717z">
+                </path>
+              </g>
+            </svg> -->
+          </a>
+        </li>
+        <li class="search-part">
+          <form action="" method="GET" class="search-main">
+            <input type='text' name='search-area' placeholder="Search qickkr
+            " class="search-bar">
+            <!-- <input type="submit" class="add-note" value=""> -->
+            <button type="submit" class="add-note">
+              <span class="relative px-3" aria-label="Search"><svg width="1.2em" height="1.2em" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 pointer-events-none">
+                  <path
+                    d="M15.394 15.394a2.052 2.052 0 012.763-.126l.138.126 2.127 2.128.128.144a2.052 2.052 0 01-1.123 3.278l-.192.038-.208.018h-.181a2.045 2.045 0 01-1.205-.47l-.141-.129-2.127-2.128-.128-.144a2.052 2.052 0 01.025-2.6l.124-.135zM9.75 3a6.75 6.75 0 01.511 13.482l-.251.014-.271.005-.26-.005A6.75 6.75 0 019.75 3z"
+                    fill="currentcolor" fill-rule="evenodd"></path>
+                </svg></span>
+            </button>
+          </form>
+        </li>
+      </div>
+      <li class="right">
+        <div>
+          <a href="{% url 'Polls:sign-in' %}">
+            <button class="btn-in">
+              Sign In
+            </button>
+          </a>
+          <a href="{% url 'Polls:sign-up' %}">
+            <button class="btn-up">
+              Sign Up
+            </button>
+          </a>
+        </div>
+      </li>
+
+    </ul>
+  </nav>
+  <div class="body-header">
+   
+    <h1>Love fun. Love <span class="header-logo">qickkr.</span> </h1>
+  </div>
+  <div class="main alone">
+    <div class="feed">
+      {% if posts %}
+      {% for post in posts %}
+      <div class="card">
+        <div class="card-main">
+          <div class="card-top">
+            <h2>@{{post.user}} • <span class="posted">{{post.time_posted}}</span></h2>
+          </div>
+          <p class="description">
+            {{post.post_text}} 
+          </p>
+          <div class="options">
+            <div class="button">
+              <span class="relative px-2"><svg width="1.4em" height="1.4em" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 pointer-events-none">
+                  <path
+                    d="M9.456 4.216l-5.985 7.851c-.456.637-.583 1.402-.371 2.108l.052.155a2.384 2.384 0 002.916 1.443l2.876-.864.578 4.042a2.384 2.384 0 002.36 2.047h.234l.161-.006a2.384 2.384 0 002.2-2.041l.576-4.042 2.877.864a2.384 2.384 0 002.625-3.668L14.63 4.33a3.268 3.268 0 00-5.174-.115zm3.57.613c.16.114.298.253.411.411l5.897 7.736a.884.884 0 01-.973 1.36l-3.563-1.069a.884.884 0 00-1.129.722l-.678 4.75a.884.884 0 01-.875.759h-.234a.884.884 0 01-.875-.76l-.679-4.75a.884.884 0 00-1.128-.72l-3.563 1.068a.884.884 0 01-.973-1.36L10.56 5.24a1.767 1.767 0 012.465-.41z"
+                    fill="currentcolor" fill-rule="evenodd"></path>
+                </svg></span>
+            </div>
+
+            <div class="comment">
+              <span class="relative px-3"><svg width="1.4em" height="1.4em" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 pointer-events-none">
+                  <path
+                    d="M8.084 3.217a35.447 35.447 0 017.05-.078l.782.078.279.031c1.089.121 1.885.372 2.606.828a4.516 4.516 0 011.664 1.86c.336.69.5 1.423.53 2.361l.005.321v3.975a4.493 4.493 0 01-3.545 4.392l-.207.04-2.089.346-2.86 2.992-.147.135c-.986.789-2.399.623-3.205-.324-.532-.625-.616-1.34-.51-2.29l.029-.224.038-.254.033-.187-1.332-.189a5.011 5.011 0 01-1.677-.55l-.253-.146-.243-.16a4.777 4.777 0 01-1.491-1.721 4.935 4.935 0 01-.532-1.972l-.009-.3V8.618c0-1.096.162-1.915.535-2.683.375-.77.94-1.4 1.664-1.859.649-.41 1.359-.655 2.288-.788l.318-.04.28-.031zm7.666 1.491a33.948 33.948 0 00-6.752-.075l-.748.075-.28.031c-.915.102-1.481.297-1.97.606a3.016 3.016 0 00-1.116 1.247c-.228.468-.357.989-.38 1.76l-.004.266v3.563c0 .577.134 1.116.375 1.587.242.471.592.874 1.024 1.18.37.263.801.453 1.276.554l.242.043 1.98.283c.339.048.457.096.575.175.119.078.262.187.27.386l-.002.024-.013.08-.164.741-.064.333c-.111.63-.167 1.332.09 1.634.263.309.7.39 1.037.187l.089-.062 2.998-3.135.13-.101.092-.063.077-.04.08-.03.035-.01.087-.02L17 15.545a2.993 2.993 0 002.495-2.77l.005-.182V8.618c0-.921-.13-1.506-.384-2.026A3.016 3.016 0 0018 5.345c-.44-.278-.943-.464-1.706-.572l-.265-.034-.279-.03zm-.55 6.294l.093.005c.398.044.707.36.707.746 0 .38-.301.693-.691.743l-.109.007H8.8l-.093-.005c-.398-.044-.707-.36-.707-.745 0-.38.301-.694.691-.744l.109-.007h6.4zm0-3.5l.093.004c.398.044.707.36.707.746 0 .38-.301.693-.691.743l-.109.007H8.8l-.093-.005C8.309 8.953 8 8.637 8 8.252c0-.38.301-.694.691-.744l.109-.007h6.4z"
+                    fill="currentcolor" fill-rule="evenodd"></path>
+                </svg></span>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="comment-section">
+            <h4>Comments</h4>
+        </div> -->
+      </div>
+      {% endfor %}
+      </ul>
+      {% else %}
+      <p>No posts are available.</p>
+      {% endif %}
+    </div>
+    <div class="main-other">
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener("scroll", function () {
+      var header = document.querySelector("nav");
+
+      header.classList.toggle("sticky", window.scrollY > 100);
+    })
+
+    var slideIn = document.querySelector('li.nav-control');
+    var slide = document.querySelector('div.side-nav');
+    var popup = document.querySelectorAll('div.popup');
+    var popupText = document.querySelectorAll("span.popuptext");
+    var Content = document.querySelector('div.main');
+
+    slideIn.addEventListener('click', function () {
+      slide.classList.toggle("show");
+      Content.classList.toggle("alone")
+    })
+
+    popup.addEventListener('click', function () {
+      popupText.classList.toggle("show");
+    })
+
+  </script>
+</body>
+
+</html>

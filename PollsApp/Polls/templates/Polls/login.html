@@ -1,0 +1,35 @@
+{% extends 'Polls/empty.html' %}
+{% block content-empty %}
+
+<div class="split left">
+    <h1>qickkr.</h1>
+</div>
+
+<div class="split right">
+    <div class="form">
+        <h1>Log In</h1>
+
+        <form method="post" class="login">
+            {% csrf_token %}
+            <p class="form-control">
+                <input type="text" name="username" autofocus="" autocapitalize="none"
+                    maxlength="150" required id="id_username" />
+                <label for="id_username">Username</label>
+            </p>
+
+
+            <p class="form-control">
+                <input type="password" name="password" aria-multiline="true" required id="id_password"/>
+                <label for="id_password">Password</label>
+            </p>
+
+            <button type="submit" class="btn">Sign In</button>
+
+            
+            <p class="text">Don't have an account?<a href="{% url 'Polls:sign-up' %}"> Register here!<a /></p>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock content-empty %}

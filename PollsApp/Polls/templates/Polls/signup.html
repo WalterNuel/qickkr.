@@ -1,0 +1,29 @@
+{% extends 'Polls/empty.html' %}
+{% block content-empty %}
+
+<div class="split left">
+    <ul>
+        <li class="logo">
+             <h1>qickkr</h1>
+        </li>
+    </ul>
+</div>
+
+<div class="split right">
+    <div class="form">
+        <h1>Sign Up</h1>
+
+        <form method="post" class="login">
+            {% csrf_token %}
+            {{form.as_p}}
+
+            <input type="submit" value="Submit">
+
+            
+            <p class="text">Don't have an account?<a href="{% url 'Polls:sign-in' %}"> Register here!<a /></p>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock content-empty %}
